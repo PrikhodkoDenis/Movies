@@ -48,6 +48,7 @@ class MainViewController: UIViewController {
     
     private func configureSubviews() {
         navigationItem.title = "Movies"
+        activityIndicator.color = .white
         
         collectionView.frame = view.bounds
         collectionView.collectionViewLayout = createLayout()
