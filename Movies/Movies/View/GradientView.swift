@@ -48,13 +48,13 @@ extension GradientView {
 
 class GradientView: UIView {
     
-    @IBInspectable private var startColor: UIColor? {
+    private var startColor: UIColor? {
         didSet {
             setupGradientColors(startColor: startColor, endColor: endColor)
         }
     }
     
-    @IBInspectable private var endColor: UIColor? {
+    private var endColor: UIColor? {
         didSet {
             setupGradientColors(startColor: startColor, endColor: endColor)
         }
