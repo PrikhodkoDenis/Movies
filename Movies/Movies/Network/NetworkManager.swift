@@ -19,26 +19,24 @@ class NetworkManager {
             return
         }
         
-        DispatchQueue.global().async {
-            URLSession.shared.dataTask(with: url) { (data, response, error) in
-                if  let error = error {
-                    let errorResult: FetchError = error.isNotConnected ? .isNotConnected : .other
-                    completion(.failure(errorResult))
-                } else if let data = data {
-                    do {
-                        let decoder = JSONDecoder()
-                        let movies = try decoder.decode(Movie.self, from: data)
-                        let errorMessage = movies.errorMessage 
-                        guard errorMessage.isEmpty else {
-                            return completion(.failure(.endFreeRequests))
-                        }
-                        completion(.success(movies))
-                    } catch {
-                        completion(.failure(.parse))
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if  let error = error {
+                let errorResult: FetchError = error.isNotConnected ? .isNotConnected : .other
+                completion(.failure(errorResult))
+            } else if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let movies = try decoder.decode(Movie.self, from: data)
+                    let errorMessage = movies.errorMessage
+                    guard errorMessage.isEmpty else {
+                        return completion(.failure(.endFreeRequests))
                     }
+                    completion(.success(movies))
+                } catch {
+                    completion(.failure(.parse))
                 }
-            }.resume()
-        }
+            }
+        }.resume()
     }
     
     func fetchDetailedData(filmId: String, completion: @escaping (_ result: Result<DetailedFilm, FetchError>) -> ()) {
@@ -47,21 +45,19 @@ class NetworkManager {
             return
         }
         
-        DispatchQueue.global().async {
-            URLSession.shared.dataTask(with: url) { (data, response, error) in
-                if  let error = error {
-                    let errorResult: FetchError = error.isNotConnected ? .isNotConnected : .other
-                    completion(.failure(errorResult))
-                } else if let data = data {
-                    do {
-                        let decoder = JSONDecoder()
-                        let detailedInfo = try decoder.decode(DetailedFilm.self, from: data)
-                        completion(.success(detailedInfo))
-                    } catch {
-                        completion(.failure(.parse))
-                    }
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if  let error = error {
+                let errorResult: FetchError = error.isNotConnected ? .isNotConnected : .other
+                completion(.failure(errorResult))
+            } else if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let detailedInfo = try decoder.decode(DetailedFilm.self, from: data)
+                    completion(.success(detailedInfo))
+                } catch {
+                    completion(.failure(.parse))
                 }
-            }.resume()
-        }
+            }
+        }.resume()
     }
 }
