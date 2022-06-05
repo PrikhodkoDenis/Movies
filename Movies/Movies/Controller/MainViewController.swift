@@ -230,12 +230,11 @@ extension MainViewController {
             widthDimension: .fractionalWidth(0.5),
             heightDimension: .fractionalHeight(0.5))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.interItemSpacing = .fixed(spacing)
         
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: spacing, leading: spacing, bottom: spacing, trailing: spacing)
         section.interGroupSpacing = spacing
-        section.orthogonalScrollingBehavior = .continuous
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         
         let header = createSectionHeader()
         section.boundarySupplementaryItems = [header]
@@ -292,4 +291,3 @@ private extension MainViewController {
         collectionView.isHidden = false
     }
 }
-
