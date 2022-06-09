@@ -206,8 +206,8 @@ extension MainViewController {
     
     private func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let layoutSectionHeaderSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(1)
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(0.1)
         )
         
         let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
